@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<body>
+<style>
+    #StudentID:focus,
+    #FullName:focus,
+    #Birthday:focus,
+    #EmailAdress:focus,
+    #MobilePhone:focus,
+    #GradeLevel:focus,
+    #InternExtern:focus,
+    #PreferredOrgClub:focus,
+    #WhyJoin:focus {
+        background-color: lightblue;
+    }
+
+    label{
+        font-weight:bold;
+        display:inline-block;
+        width:150px;
+    }
+    body{
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        margin: 10px;
+        text-align: center;
+        background-color:wheat;
+        border: 15px solid black
+    }
+    p{
+        font-size: 30px;
+        margin: auto;
+        background-color: whitesmoke;
+        border: 15px solid black;
+        text-align: center;
+    }
+    
+
+</style>
+
+<form action="submit" method="post" onsubmit="return confirm('Are you sure you want to submit the form?')" onreset="return confirm('Are you sure you want to reset?')"> 
+    <p> Student Registration Form</p>
+    <label for="StudentID">Student ID:</label>
+    <br>
+    <br>
+    <input type="number" id="StudentID" name="StudentID" required>
+    <br>
+    <br>
+     <label for="FullName">Full Name:</label>
+     <br>
+     <br>
+    <input type="text" id="FullName" name="FullName" required>
+    <br>
+    <br>
+     <label for="Birthday">Birthday:</label>
+     <br>
+     <br>
+    <input type="date" id="Birthday" name="Birthday" required>
+    <br>
+    <br>
+     <label for="EmailAdress">Email Adress:</label>
+     <br>
+     <br>
+    <input type="email" id="EmailAdress" name="EmailAdress" required>
+    <br>
+    <br>
+     <label for="MobilePhone">Mobile Phone:</label>
+     <br>
+     <br>
+    <input type="text" id="MobilePhone" name="MobilePhone" required>
+    <br>
+    <br>
+    <label for="GradeLevel">Grade Level:</label>
+    <select name="GradeLevel" id="GradeLevel" required>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+    </select>
+    <br>
+    <br>
+    <label for="Intern/Extern">Intern / Extern: </label>
+    <br>
+    <label for="Intern">Intern</label>
+    <input type="radio" id="Intern" name="Intern/Extern" value="Intern" required>
+    <br>
+    <label for="Extern">Extern</label>
+    <input type = "radio" id="Extern" name="Intern/Extern" value="Extern" required>
+    <br>
+    <br>
+    <label for="PreferredOrganization/Club">Preferred Organization/Club:</label>
+    <select name="PreferredOrganization/Club" id="PreferredOrganization/Club" required>
+        <option value="Labuyo">Labuyo</option>
+        <option value="Pallastro">Pallastro</option>
+        <option value="Alinati">Alinati</option>
+        <option value="Invictus">Invictus</option>
+        <option value="Exposure">Exposure</option>
+        <option value="Ellipsis">Ellipsis</option>
+        <option value="Bravura">Bravura</option>
+    </select>
+    <br>
+    <br>
+    <label for="Whydoyouwanttojoin?"> Why do you want to join?</label>
+    <br>
+    <br>
+    <textarea id="Whydoyouwanttojoin?" name="Whydoyouwanttojoin?" required rows="5" cols ="60" onblur="Highlight()"></textarea>
+    <script>
+     function Highlight(){
+        document.getElementById('Whydoyouwanttojoin?').style.backgroundColor = "lightblue";
+    }
+    </script>
+    <br>
+    <br>
+    <input type="submit" value="Submit">
+    <input type="reset" value="Reset">
+    
+    
+
+</form> 
+</body>
+</html>
