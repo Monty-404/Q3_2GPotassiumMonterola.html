@@ -37,7 +37,7 @@
 
 </style>
 
-<form action="submit" method="post" onsubmit="return confirm('Are you sure you want to submit the form?')" onreset="return confirm('Are you sure you want to reset?')"> 
+<form  method="post" onsubmit="return confirm('Are you sure you want to submit the form?')" onreset="return confirm('Are you sure you want to reset?')"> 
     <p> Student Registration Form</p>
     <label for="StudentID">Student ID:</label>
     <br>
@@ -112,9 +112,36 @@
     </script>
     <br>
     <br>
-    <input type="submit" value="Submit">
+    <button type="submit" onclick="StoreData()"> Submit </button>
     <input type="reset" value="Reset">
-    
+    <br>
+    <button type="button" onclick="window.location.href='viewSignUps.html'"> View Signups</button>
+
+    <script>
+    function StoreData(){
+       const obj = {
+        StudentID: document.getElementById('StudentID'),
+        FullName: document.getElementById('FullName'),
+        Birthday: document.getElementById('Birthday'),
+        EmailAdress: document.getElementById('EmailAdress'),
+        MobilePhone: document.getElementById('MobilePhone'),
+        GradeLevel: document.getElementById('GradeLevel'),
+        InternExtern: document.getElementsByName('Intern/Extern'),
+        PreferredClub: document.getElementById('PreferredOrganization/Club'),
+        Whydoyouwanttojoin: document.getElementById('Whydoyouwanttojoin?')
+       };
+       localStorage.setItem(obj.StudentID, JSON.stringify(obj));
+       localStorage.setItem(obj.FullName, JSON.stringify(obj));
+       localStorage.setItem(obj.Birthday, JSON.stringify(obj));
+       localStorage.setItem(obj.EmailAdress, JSON.stringify(obj));
+       localStorage.setItem(obj.MobilePhone, JSON.stringify(obj));
+       localStorage.setItem(obj.GradeLevel, JSON.stringify(obj));
+       localStorage.setItem(obj.Intern/Extern, JSON.stringify(obj));
+       localStorage.setItem(obj.PreferredOrganization/Club, JSON.stringify(obj));
+       localStorage.setItem(obj.Whydoyouwanttojoin, JSON.stringify(obj));
+    }
+    </script>
+
     
 
 </form> 

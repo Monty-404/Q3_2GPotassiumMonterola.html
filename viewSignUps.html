@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<body>
+<table>
+    <thead>
+        <tr>
+            <th>Student ID</th>
+            <th>Full Name</th>
+            <th>Birthday</th>
+            <th>Email Address</th>
+            <th>Mobile Phone</th>
+            <th>Grade Level</th>
+            <th>Intern/Extern</th>
+            <th>Preferred Club</th>
+            <th>Why Join</th>
+        </tr>
+    </thead>
+    <tbody id="list"></tbody>
+</table>
+    <script>
+    const DATA_KEY = {
+     StudentId: localStorage.getItem('StudentID'),
+     FullName: localStorage.getItem('FullName'),
+     Birthday: localStorage.getItem('Birthday'),
+     EmailAdress: localStorage.getItem('EmailAdress'),
+     MobilePhone: localStorage.getItem('MobilePhone'),
+     GradeLevel: localStorage.getItem('GradeLevel'),
+     InternExtern: localStorage.getItem('Intern/Extern'),
+     PreferredClub: localStorage.getItem('PreferredOrganization/Club'),
+     Whydoyouwanttojoin: localStorage.getItem('Whydoyouwanttojoin')
+    };
+
+    function loadDATA(){
+        const raw = localStorage.getItem('DATA_KEY');
+
+        if(raw){
+            return JSON.parse (raw);
+        } else {
+            return [[], [], [], [], [], [], [], [], []];
+        }
+    }
+
+    function saveDATA(data){
+        localStorage.setItem('DATA_KEY', JSON.stringify(data));
+    }
+
+    function render(){
+        const data = loadDATA();
+        const list = document.getElementById('list');
+        if(data.length == 0){
+            list.innerHTML='<tr><td colspan="9">No data available</td></tr>';
+            return;
+        }
+        list.innerHTML = data.map((item) =>
+            `<tr>
+                <td>${item.StudentID}</td>
+                <td>${item.FullName}</td>
+                <td>${item.Birthday}</td>
+                <td>${item.EmailAdress}</td>
+                <td>${item.MobilePhone}</td>
+                <td>${item.GradeLevel}</td>
+                <td>${item.InternExtern}</td>
+                <td>${item.PreferredClub}</td>
+                <td>${item.Whydoyouwanttojoin}</td>
+            </tr>`
+        ).join('');
+    }
+
+    function escapeHtml(n){
+        let str = String(n);
+        let escapedStr = "";
+        for(let i = 0; i < str.length; i++){
+            let c = str.charAt(i);
+            
+             if (c === '&') {
+          escapedStr += '&amp;';
+        } else if (c === '<') {
+          escapedStr += '&lt;';
+        } else if (c === '>') {
+          escapedStr += '&gt;';
+        } else if (c === '"') {     
+          escapedStr += '&quot;';
+        } else if (c === "'") {
+          escapedStr += '&#39;';
+        } else {
+          escapedStr += c;
+        }
+      }
+      return escapedStr;
+    }
+
+    
+
+</script>
+
+    <a href="index.html">Back to Signups</a>
+</body>
+</html>
