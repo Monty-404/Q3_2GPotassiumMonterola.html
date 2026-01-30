@@ -37,7 +37,7 @@
 
 </style>
 
-<form  method="post" onsubmit="return confirm('Are you sure you want to submit the form?')" onreset="return confirm('Are you sure you want to reset?')"> 
+<form id="signupform" method="post"  onreset="return confirm('Are you sure you want to reset?')">
     <p> Student Registration Form</p>
     <label for="StudentID">Student ID:</label>
     <br>
@@ -89,7 +89,7 @@
     <input type = "radio" id="Extern" name="Intern/Extern" value="Extern" required>
     <br>
     <br>
-    <label for="PreferredOrganization/Club">Preferred Organization/Club:</label>
+   <label for="PreferredOrganization/Club">Preferred Organization/Club:</label>
     <select name="PreferredOrganization/Club" id="PreferredOrganization/Club" required>
         <option value="Labuyo">Labuyo</option>
         <option value="Pallastro">Pallastro</option>
@@ -112,34 +112,43 @@
     </script>
     <br>
     <br>
-    <button type="submit" onclick="StoreData()"> Submit </button>
+    <button type="submit" id="submit" > Submit </button>
     <input type="reset" value="Reset">
     <br>
     <button type="button" onclick="window.location.href='viewSignUps.html'"> View Signups</button>
 
     <script>
-    function StoreData(){
-       const obj = {
-        StudentID: document.getElementById('StudentID'),
-        FullName: document.getElementById('FullName'),
-        Birthday: document.getElementById('Birthday'),
-        EmailAdress: document.getElementById('EmailAdress'),
-        MobilePhone: document.getElementById('MobilePhone'),
-        GradeLevel: document.getElementById('GradeLevel'),
-        InternExtern: document.getElementsByName('Intern/Extern'),
-        PreferredClub: document.getElementById('PreferredOrganization/Club'),
-        Whydoyouwanttojoin: document.getElementById('Whydoyouwanttojoin?')
-       };
-       localStorage.setItem(obj.StudentID, JSON.stringify(obj));
-       localStorage.setItem(obj.FullName, JSON.stringify(obj));
-       localStorage.setItem(obj.Birthday, JSON.stringify(obj));
-       localStorage.setItem(obj.EmailAdress, JSON.stringify(obj));
-       localStorage.setItem(obj.MobilePhone, JSON.stringify(obj));
-       localStorage.setItem(obj.GradeLevel, JSON.stringify(obj));
-       localStorage.setItem(obj.Intern/Extern, JSON.stringify(obj));
-       localStorage.setItem(obj.PreferredOrganization/Club, JSON.stringify(obj));
-       localStorage.setItem(obj.Whydoyouwanttojoin, JSON.stringify(obj));
+   
+
+      function storeData(){
+     const obj = {
+      StudentID: document.getElementById('StudentID').value,
+      FullName: document.getElementById('FullName').value,
+      Birthday: document.getElementById('Birthday').value,
+      EmailAdress: document.getElementById('EmailAdress').value,
+      MobilePhone: document.getElementById('MobilePhone').value,
+      GradeLevel: document.getElementById('GradeLevel').value,
+      PreferredClub: document.getElementById('PreferredOrganization/Club').value,
+     };
+     document.getElementsByName('Intern/Extern').forEach((radio) => {
+       if (radio.checked) {
+         obj.InternExtern = radio.value;
+       }
+     });
+
+     const info = JSON.parse(localStorage.getItem("data")) || [];
+     info.push(obj);
+     localStorage.setItem("data", JSON.stringify(info));
     }
+
+    document.getElementById('signupform').addEventListener("submit", function(e){
+       e.preventDefault();
+       if(confirm('Are you sure you want to submit the form?')){
+           storeData();
+       }
+    });
+
+
     </script>
 
     

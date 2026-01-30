@@ -1,7 +1,44 @@
 <!DOCTYPE html>
 <html>
 <body>
-<table>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+        background-color: whitesmoke;
+    }
+
+    th {
+        background-color: greenyellow
+    }
+</style>
+
+
+    <h1>Student Signups</h1>
+
+    <a href="index.html">Back to Signups</a>
+    <br>
+    <br>
+    <label for="PreferredOrganization/Club">Select Club:</label>
+    <select name="PreferredOrganization/Club" id="PreferredOrganization/Club" required>
+        <option value="Labuyo">Labuyo</option>
+        <option value="Pallastro">Pallastro</option>
+        <option value="Alinati">Alinati</option>
+        <option value="Invictus">Invictus</option>
+        <option value="Exposure">Exposure</option>
+        <option value="Ellipsis">Ellipsis</option>
+        <option value="Bravura">Bravura</option>
+    </select>
+    <br>
+    <br>
+    <h4>Total Signup: </h4>
+      <table>
     <thead>
         <tr>
             <th>Student ID</th>
@@ -12,58 +49,42 @@
             <th>Grade Level</th>
             <th>Intern/Extern</th>
             <th>Preferred Club</th>
-            <th>Why Join</th>
         </tr>
     </thead>
-    <tbody id="list"></tbody>
-</table>
+    <tbody id="table"></tbody>
+    </table>
+
     <script>
-    const DATA_KEY = {
-     StudentId: localStorage.getItem('StudentID'),
-     FullName: localStorage.getItem('FullName'),
-     Birthday: localStorage.getItem('Birthday'),
-     EmailAdress: localStorage.getItem('EmailAdress'),
-     MobilePhone: localStorage.getItem('MobilePhone'),
-     GradeLevel: localStorage.getItem('GradeLevel'),
-     InternExtern: localStorage.getItem('Intern/Extern'),
-     PreferredClub: localStorage.getItem('PreferredOrganization/Club'),
-     Whydoyouwanttojoin: localStorage.getItem('Whydoyouwanttojoin')
-    };
 
     function loadDATA(){
-        const raw = localStorage.getItem('DATA_KEY');
-
-        if(raw){
-            return JSON.parse (raw);
-        } else {
-            return [[], [], [], [], [], [], [], [], []];
-        }
+        return JSON.parse(localStorage.getItem("data")) || [];
     }
 
-    function saveDATA(data){
-        localStorage.setItem('DATA_KEY', JSON.stringify(data));
-    }
+
 
     function render(){
         const data = loadDATA();
-        const list = document.getElementById('list');
+        const table = document.getElementById("table");
         if(data.length == 0){
-            list.innerHTML='<tr><td colspan="9">No data available</td></tr>';
+            table.innerHTML='<tr><td colspan="9">No data available</td></tr>';
             return;
         }
-        list.innerHTML = data.map((item) =>
-            `<tr>
-                <td>${item.StudentID}</td>
-                <td>${item.FullName}</td>
-                <td>${item.Birthday}</td>
-                <td>${item.EmailAdress}</td>
-                <td>${item.MobilePhone}</td>
-                <td>${item.GradeLevel}</td>
-                <td>${item.InternExtern}</td>
-                <td>${item.PreferredClub}</td>
-                <td>${item.Whydoyouwanttojoin}</td>
-            </tr>`
-        ).join('');
+        table.innerHTML = data.map(item => createRow(item)).join("");
+    }
+
+    function createRow(item){
+        return `
+            <tr>
+                <td>${escapeHtml(item.StudentID)}</td>
+                <td>${escapeHtml(item.FullName)}</td>
+                <td>${escapeHtml(item.Birthday)}</td>
+                <td>${escapeHtml(item.EmailAdress)}</td>
+                <td>${escapeHtml(item.MobilePhone)}</td>
+                <td>${escapeHtml(item.GradeLevel)}</td>
+                <td>${escapeHtml(item.InternExtern)}</td>
+                <td>${escapeHtml(item.PreferredClub)}</td>
+            </tr>
+            `;
     }
 
     function escapeHtml(n){
@@ -89,10 +110,15 @@
       return escapedStr;
     }
 
-    
+
+render();
 
 </script>
 
-    <a href="index.html">Back to Signups</a>
+   
+
+   
+
+
 </body>
 </html>
