@@ -2,6 +2,11 @@
 <html>
 <body>
 <style>
+    body{
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        background-color:wheat;
+        text-align: center;
+    }
     table {
         width: 100%;
         border-collapse: collapse;
@@ -11,12 +16,17 @@
         border: 1px solid black;
         padding: 8px;
         text-align: left;
-        background-color: whitesmoke;
+        background-color: lightgray;
     }
 
     th {
         background-color: greenyellow
     }
+    h1{
+        text-align: center;
+        color: lightslategray;
+    }
+    
 </style>
 
 
@@ -26,7 +36,9 @@
     <br>
     <br>
     <label for="PreferredOrganization/Club">Select Club:</label>
-    <select name="PreferredOrganization/Club" id="PreferredOrganization/Club" required>
+    <select name="PreferredOrganization/Club" id="PreferredOrganization/Club" oninput="filterTable()">
+        <option value="All">--Selection--</option>
+        <option value="All">All</option>
         <option value="Labuyo">Labuyo</option>
         <option value="Pallastro">Pallastro</option>
         <option value="Alinati">Alinati</option>
@@ -37,7 +49,7 @@
     </select>
     <br>
     <br>
-    <h4>Total Signup: </h4>
+    <h4>Total Signup: <span id="totalSignups"></span></h4>
       <table>
     <thead>
         <tr>
@@ -52,6 +64,11 @@
         </tr>
     </thead>
     <tbody id="table"></tbody>
+    <tbody id="noSignups">
+        <tr>
+            <td colspan="9">No sign ups yet</td>
+        </tr>
+    </tbody>
     </table>
 
     <script>
@@ -67,9 +84,14 @@
         const table = document.getElementById("table");
         if(data.length == 0){
             table.innerHTML='<tr><td colspan="9">No data available</td></tr>';
+            document.getElementById("totalSignups").textContent = 0;
+            document.getElementById(noSignups).style.display = "";
             return;
         }
         table.innerHTML = data.map(item => createRow(item)).join("");
+        document.getElementById("noSignups").style.display = "none";
+
+        filterTable();
     }
 
     function createRow(item){
@@ -85,6 +107,36 @@
                 <td>${escapeHtml(item.PreferredClub)}</td>
             </tr>
             `;
+    }
+
+    function filterTable() {
+        const select = document.getElementById("PreferredOrganization/Club");
+        const table = document.getElementById("table");
+        const rows = table.getElementsByTagName("tr");
+        filter = select.value;
+        let visibleCount = 0;
+
+        for(let row of rows){
+            cells = row.getElementsByTagName("td");
+            clubs = cells[7] || null;
+            if (clubs) {
+                if (filter == "All" ||clubs.textContent === filter || filter === "") {
+                    row.style.display = "";
+                    visibleCount++;
+                } else {
+                    row.style.display = "none";
+                }
+            }
+        }
+
+        const noMatch = document.getElementById("noSignups");
+        if(visibleCount === 0){
+            noMatch.style.display = "";
+        }
+        else{ 
+           noMatch.style.display = "none";
+        }
+        document.getElementById("totalSignups").textContent = visibleCount;
     }
 
     function escapeHtml(n){
